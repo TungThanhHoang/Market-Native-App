@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "react-3",
+    "slug": "react-3",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "react-3"
+}
