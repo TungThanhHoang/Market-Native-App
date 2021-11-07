@@ -1,21 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React, { useContext, useState } from "react";
+import ProductContextProvider from "./context/ProductContext";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Landing from "./screens/Landing";
+import ProtectRouter from "./routing/ProtectRouter";
+import AuthContextProvider from "./context/AuthContext";
+import CartContextProvider from "./context/CartContext";
+import CheckOutContextProvider, {
+  CheckOutContext,
+} from "./context/CheckOutContext";
+
+const Root = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContextProvider>
+      <ProductContextProvider>
+        <CartContextProvider>
+          <CheckOutContextProvider>
+            <NavigationContainer>
+              <Root.Navigator
+                initialRouteName="Landing"
+                screenOptions={{ gestureEnabled: false, headerShown: false }}
+              >
+                <Root.Screen name="Landing" component={Landing} />
+                <Root.Screen name="Protect" component={ProtectRouter} />
+              </Root.Navigator>
+            </NavigationContainer>
+          </CheckOutContextProvider>
+        </CartContextProvider>
+      </ProductContextProvider>
+    </AuthContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

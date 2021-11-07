@@ -1,0 +1,4 @@
+export const LOAD_USER = "LOAD_USER"
+export const LOAD_PRODUCT = "LOAD_PRODUCT"
+export const LOAD_NEW_PRODUCTS = "LOAD_NEW_PRODUCTS"
+export const LOAD_ONE_PRODUCT = "LOAD_ONE_PRODUCT"
