@@ -17,7 +17,8 @@ function CardProductItem({
       0: { url },
     },
   },
-  formatPrice
+  formatPrice,
+  ward
 }) {
   const navigation = useNavigation()
   return (
@@ -34,7 +35,7 @@ function CardProductItem({
           <View style={styles.detailProduct}>
             <Text style={{ fontWeight: "600" }}>{title}</Text>
             <Text style={{ fontSize: 12, opacity: 0.7, paddingTop: 2 }}>
-              {/* {ward} */}
+              {ward}
             </Text>
             <View
               style={{

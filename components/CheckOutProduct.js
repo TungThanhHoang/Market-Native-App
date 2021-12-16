@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { API_URL } from "../../constants/constant";
+import { API_URL } from "../constants/constant";
 
 function CheckOutProduct({
   item: {

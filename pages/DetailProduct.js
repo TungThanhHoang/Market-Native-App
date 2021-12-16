@@ -10,20 +10,8 @@ import {
 } from "react-native";
 import CardDetailProduct from "../components/CardDetailProduct";
 import { ProductContext } from "../context/ProductContext";
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from "react-native-indicators";
-import { API_URL } from "../constants/constant";
+import LoadingPage from "../components/LoadingPage";
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 function DetailProduct({ route }) {
   const { idProduct: id } = route.params;
@@ -43,16 +31,7 @@ function DetailProduct({ route }) {
     <View>
       <StatusBar barStyle="dark-content" />
       {isloading ? (
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 1,
-            top: windowHeight / 2,
-          }}
-        >
-          <PulseIndicator color="#ECD444" size={80} />
-        </View>
+        <LoadingPage />
       ) : (
         <View>
           {product?.map((item) => {

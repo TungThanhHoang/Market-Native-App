@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-// import { Toast } from 'antd-mobile'
 import {
   View,
   StyleSheet,
@@ -14,21 +13,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext } from "../context/AuthContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { Toast } from "@ant-design/react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-function LoginScreen() {
+
+function Login() {
   const navigation = useNavigation();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser , authState:{ isLoading} } = useContext(AuthContext);
 
   const handleLoginForm = async () => {
-    // if (identifier === "" || password === "") {
-    //   return Alert.alert("Nhập dữ liệu");
-    // }
+    if (identifier === "" || password === "") {
+      return Toast.fail("Nhập dữ liệu", 1);
+    } 
     try {
       const sendData = await loginUser(identifier, password);
+      if (sendData === undefined) {
+       return Toast.fail("Tài khoản hoặc mật khẩu không đúng" ,1)
+      } 
     } catch (error) {
       console.log(error);
     }
@@ -73,7 +77,7 @@ function LoginScreen() {
             backgroundColor="#f1c40f"
             onPress={() => handleLoginForm(identifier, password)}
           >
-            <Text style={styles.textBtn}>Đăng Nhập</Text>
+            <Text style={styles.textBtn}>{ isLoading ? "loading..." : " Đăng nhập"}</Text>
           </TouchableOpacity>
           <View style={styles.navigateRegister}>
             <Text> Chưa có tài khoản ?</Text>
@@ -87,7 +91,7 @@ function LoginScreen() {
   );
 }
 
-export default LoginScreen;
+export default Login;
 
 const styles = StyleSheet.create({
   container: {
@@ -122,16 +126,16 @@ const styles = StyleSheet.create({
   titleHeader: {
     marginTop: 20,
     fontWeight: "500",
-    fontSize: 28,
+    fontSize: 24,
   },
   title: {
     paddingTop: 20,
     paddingBottom: 12,
-    fontSize: 16,
+    fontSize: 14,
     textAlign: "left",
   },
   input: {
-    height: 50,
+    height: 45,
     width: windowWidth - 80,
     borderWidth: 1,
     borderColor: "#f1c40f",

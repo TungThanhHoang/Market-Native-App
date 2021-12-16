@@ -60,12 +60,27 @@ const AuthContextProvider = ({ children }) => {
       });
       if (response.data) {
         await SecureStore.setItemAsync(TOKEN_USER, response.data.jwt);
-        console.log(response.data);
       }
       await loadUser();
       return response.data;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const registerUser = async (formRegister) => {
+    try {
+      const response = await axios.post(
+        `${API_URL}/auth/local/register`,
+        formRegister
+      );
+      if (response.data.user) {
+        await SecureStore.setItemAsync(TOKEN_USER, response.data.jwt);
+      }
+      await loadUser();
+      return response.data;
+    } catch (error) {
+      return error.response.data;
     }
   };
 
@@ -85,6 +100,7 @@ const AuthContextProvider = ({ children }) => {
     authState,
     loginUser,
     logoutUser,
+    registerUser,
   };
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>

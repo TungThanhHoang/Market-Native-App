@@ -8,6 +8,7 @@ import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import expo.modules.ReactActivityDelegateWrapper;
+import com.gevorg.reactlibrary.RNQrGeneratorPackage;
 
 public class MainActivity extends ReactActivity {
   @Override

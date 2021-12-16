@@ -1,54 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { View, Text , StyleSheet ,Button } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { BarCodeScanner } from "expo-barcode-scanner";
+import React, { useLayoutEffect } from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
+import QRCodeCheck from "../pages/QRCodeCheck";
 
-function QrcodeScreen() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-
-  const askForCameraPermission = async () => {
-    const { status } = await BarCodeScanner.requestPermissionsAsync();
-    setHasPermission(status === "granted");
-  };
-  useEffect(() => {
-    askForCameraPermission();
-  }, []);
-
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
-
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }
+const QRcodeStack = createStackNavigator();
+function QrcodeScreen({ navigation, route }) {
+  useLayoutEffect(() => {
+      navigation.setOptions({ tabBarVisible: false });
+  }, [navigation, route]);
   return (
     <>
-      <View style={styles.container}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
-        />
-        <Text>hello</Text>
-        {scanned && (
-          <Button
-            title={"Tap to Scan Again"}
-            onPress={() => setScanned(false)}
-          />
-        )}
-      </View>
+      <QRcodeStack.Navigator
+        initialRouteName="qrcode"
+        screenOptions={{ headerShown: false }}
+      >
+        <QRcodeStack.Screen name="qrcode" component={QRCodeCheck} />
+      </QRcodeStack.Navigator>
     </>
   );
 }
 
 export default QrcodeScreen;
-const styles = StyleSheet.create({
-  container:{
-    flex:1,
-
-  }
-})

@@ -5,10 +5,12 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 function Select() {
   const [country, setCountry] = useState("Unknown");
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <>
       <View>
+        <View><Text>modal</Text></View>
         <Picker
           selectedValue={country}
           onValueChange={(value, index) => setCountry(value)}

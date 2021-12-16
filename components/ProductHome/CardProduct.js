@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import slug from "slug";
 import {
   View,
   Text,
@@ -25,13 +24,7 @@ function CardProduct() {
     formatPrice,
     loadProduct,
   } = useContext(ProductContext);
-  useEffect(() => {
-    setTimeout(() => {
-      const tokenProduct = slug(ward);
-      loadProduct(tokenProduct);
-    });
-  }, []);
-
+ 
   return (
     <>
       <View style={styles.container}>
@@ -40,7 +33,8 @@ function CardProduct() {
           scrollEnabled={false}
           numColumns={2}
           data={products}
-          renderItem={({ item }) => <CardProductItem item={item} formatPrice={formatPrice}/>}
+          listKey="1.3"
+          renderItem={({ item }) => <CardProductItem item={item} ward={ward} formatPrice={formatPrice}/>}
           keyExtractor={(item, index) => index}
           contentInset={{ bottom: 100 }}
         />

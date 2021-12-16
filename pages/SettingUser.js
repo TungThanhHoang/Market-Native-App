@@ -25,18 +25,18 @@ function SettingUser({ navigation }) {
       <View style={styles.wrapSetting}>
         <Text style={styles.titleSetting}>Thiết lập hồ sơ</Text>
         <View style={styles.backgroundCard}>
-          <View style={styles.cardItem}>
+          <TouchableOpacity style={styles.cardItem} onPress={()=> navigation.navigate('Detail-user')} >
             <Text>Hồ sơ của tôi</Text>
             <Ionicons name="chevron-forward-outline" color="#000" size={22} />
-          </View>
-          <View style={styles.cardItem}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cardItem} onPress={()=> navigation.navigate('Address-user')} >
             <Text>Địa chỉ</Text>
             <Ionicons name="chevron-forward-outline" size={22} />
-          </View>
-          <View style={styles.cardItem}>
-            <Text>Tài khoản</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.cardItem} onPress={()=> navigation.navigate('Password-user')}>
+            <Text>Mật khẩu</Text>
             <Ionicons name="chevron-forward-outline" size={22} />
-          </View>
+          </TouchableOpacity>
         </View>
         <Text style={styles.titleSetting}>Hổ trợ</Text>
         <View style={styles.backgroundCard}>

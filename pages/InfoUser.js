@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { Avatar, Badge } from "react-native-elements";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/core";
 import { AuthContext } from "../context/AuthContext";
+import { CheckOutContext } from "../context/CheckOutContext";
 function InfoUser() {
   const navigation = useNavigation();
   const {
@@ -13,6 +14,27 @@ function InfoUser() {
       user: { firstname, lastname },
     },
   } = useContext(AuthContext);
+  const { handleLoadBillDeivery, stateBill, loadBill, bill } =
+    useContext(CheckOutContext);
+
+  useEffect(() => {
+    loadBill();
+    handleLoadBillDeivery(stateBill);
+  }, [stateBill]);
+
+  var countBillUnconfirmed = bill.reduce((acc, curr) => {
+    if (curr["status"] === "unconfirmed") acc++;
+    return acc;
+  }, 0);
+  var countBillconfirmed = bill.reduce((acc, curr) => {
+    if (curr["status"] === "confirmed") acc++;
+    return acc;
+  }, 0);
+  var countBilldelivery = bill.reduce((acc, curr) => {
+    if (curr["status"] === "delivery") acc++;
+    return acc;
+  }, 0);
+
   return (
     <>
       <View style={styles.headerTop}>
@@ -47,29 +69,49 @@ function InfoUser() {
             <Ionicons name="receipt-outline" size={25} color="#3498db" />
             <Text style={styles.titleBill}>Đơn Mua</Text>
           </View>
-          <View style={styles.viewAll}>
-            <Text style={styles.subTitle}>Xem lịch sử mua hàng</Text>
-            <Ionicons name="chevron-forward-outline" size={20} />
-          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Order-bill", { undefined })}
+          >
+            <View style={styles.viewAll}>
+              <Text style={styles.subTitle}>Xem lịch sử mua hàng</Text>
+              <Ionicons name="chevron-forward-outline" size={20} />
+            </View>
+          </TouchableOpacity>
         </View>
         <View style={styles.statusBill}>
-          <View style={styles.wrapStatus}>
+          <TouchableOpacity
+            style={styles.wrapStatus}
+            onPress={() => navigation.navigate("Order-bill", { idTab: 2 })}
+          >
             <Ionicons name="cube-outline" size={28} />
             <Text>Chờ xác nhận</Text>
-          </View>
+            <Badge
+              status="error"
+              value={`${countBillUnconfirmed}`}
+              containerStyle={{ position: "absolute", top: -4, right: 9 }}
+            />
+          </TouchableOpacity>
           <View style={styles.wrapStatus}>
             <Ionicons name="file-tray-full-outline" size={28} />
             <Text>Chờ lấy hàng</Text>
             <Badge
               status="error"
-              value={4}
+              value={`${countBillconfirmed}`}
               containerStyle={{ position: "absolute", top: -4, right: 9 }}
             />
           </View>
-          <View style={styles.wrapStatus}>
+          <TouchableOpacity
+            style={styles.wrapStatus}
+            onPress={() => navigation.navigate("Order-bill", { idTab: 4 })}
+          >
             <Ionicons name="car-outline" size={28} />
+            <Badge
+              status="error"
+              value={`${countBilldelivery}`}
+              containerStyle={{ position: "absolute", top: -4, right: 9 }}
+            />
             <Text>Đang giao</Text>
-          </View>
+          </TouchableOpacity>
           <View style={styles.wrapStatus}>
             <Ionicons name="ribbon-outline" size={28} />
             <Text>Đánh giá</Text>

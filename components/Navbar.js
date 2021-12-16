@@ -10,47 +10,54 @@ function Navbar({ navigation, title }) {
     <>
       <View
         style={{
-          backgroundColor: "#FFDC5E",
+          backgroundColor: "#fff",
           height: 70,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 1,
+          },
+          shadowOpacity: 0.18,
+          shadowRadius: 1.0,
+
+          elevation: 1,
         }}
       >
         <View
           style={{
             position: "absolute",
-            top: 25,
+            top: 30,
             left: 10,
             zIndex: 10,
-            opacity: 0.6,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="chevron-back-outline" size={30} color="#000" />
+            <Ionicons name="chevron-back-outline" size={25} color="#000" />
           </TouchableOpacity>
         </View>
         <View
           style={{
             position: "absolute",
-            top: "40%",
-            left: "50%",
-            transform: [{ translateX: -50 }]
+            alignSelf: "center",
+            top: 30,
           }}
         >
-          <Text style={{ fontSize: 18, fontWeight: "400" }}>{title}</Text>
+          <Text style={{ fontSize: 18, fontWeight: "500" }}>{title}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
           <View
             style={{
               position: "absolute",
               right: 50,
-              top: 27,
+              top: 30,
               zIndex: 10,
             }}
           >
             <Ionicons
               name="cart-outline"
-              size={26}
+              size={25}
               color="#000"
-              style={{ opacity: 0.6 }}
+              
             />
             <Badge
               status="error"
@@ -63,12 +70,11 @@ function Navbar({ navigation, title }) {
           style={{
             position: "absolute",
             right: 10,
-            top: 25,
-            opacity: 0.6,
+            top: 28,
             zIndex: 10,
           }}
         >
-          <Ionicons name="settings-outline" size={26} color="#000" />
+          <Ionicons name="settings-outline" size={25} color="#000" />
         </View>
       </View>
     </>

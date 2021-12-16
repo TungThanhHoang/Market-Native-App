@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import {
   View,
   Text,
@@ -11,24 +11,44 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-
 import NavbarHome from "../components/NavbarHome";
 import Poster from "../components/Poster";
 import Categories from "../components/Categories";
 import CardProduct from "../components/ProductHome/CardProduct";
 import NewProduct from "../components/NewProductHome/NewProduct";
-import { SafeAreaView } from "react-native-safe-area-context";
-
+import { ProductContext } from "../context/ProductContext";
+import { CategoryContext } from "../context/CategoryContext";
+import slug from "slug";
+import { AuthContext } from "../context/AuthContext";
 const windowWidth = Dimensions.get("window").width;
 
 function Home({ navigation }) {
+  const [isFreshing, setIsFreshing] = useState(false);
+  const {
+    authState: {
+      user: { ward },
+    },
+  } = useContext(AuthContext);
+  const { loadNewProduct, loadProduct } = useContext(ProductContext);
+  const { loadCategory } = useContext(CategoryContext);
+  const tokenProduct = slug(ward);
+
+  const handleFreshing = () => {
+    setIsFreshing(true);
+    loadCategory(tokenProduct)
+    loadNewProduct(tokenProduct)
+    loadProduct(tokenProduct).then(() => setIsFreshing(false));
+  };
+
+  useEffect(() => {
+    const tokenProduct = slug(ward);
+    loadCategory();
+    loadProduct(tokenProduct);
+    loadNewProduct(tokenProduct);
+  }, []);
+
   const HomeContent = () => (
     <View>
-      <StatusBar barStyle="dark-content" />
-      <View style={{ position: "relative", top: 0, zIndex: 10 }}>
-        <NavbarHome />
-      </View>
-      {/* ScrollView Component */}
       {/* Component Poster */}
       <View style={styles.cardCarousel}>
         <Poster />
@@ -57,16 +77,25 @@ function Home({ navigation }) {
         <Text style={styles.titleNewProduct}>Sản phẩm gợi ý</Text>
         <CardProduct />
       </View>
-      {/* End ScrollView */}
     </View>
   );
   return (
     <>
       <View style={styles.container}>
+        <View>
+          <StatusBar barStyle="dark-content" />
+          <View style={{ position: "relative", top: 0, zIndex: 10 }}>
+            <NavbarHome />
+          </View>
+        </View>
         <FlatList
-          ListHeaderComponent={HomeContent}
-          listKey={(item, index) => "D" + index.toString()}
-          keyExtractor={({ item, index }) => index.toString()}
+          onRefresh={() => handleFreshing()}
+          refreshing={isFreshing}
+          // ListHeaderComponent={headerHome}
+          showsVerticalScrollIndicator={false}
+          ListFooterComponent={HomeContent}
+          contentInset={{ bottom: 100 }}
+
         />
       </View>
     </>

@@ -27,13 +27,6 @@ function NewProduct() {
     loadNewProduct,
   } = useContext(ProductContext);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const tokenProduct = slug(ward);
-      loadNewProduct(tokenProduct);
-    });
-  }, []);
-
   const ProductItemCard = ({
     item: {
       id,
@@ -82,6 +75,7 @@ function NewProduct() {
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           data={newProducts}
+          listKey="1.2"
           renderItem={({ item }) => <ProductItemCard item={item} />}
           keyExtractor={(item, index) => item.id}
           nestedScrollEnabled
@@ -105,6 +99,15 @@ const styles = StyleSheet.create({
     padding: 12,
     margin: 5,
     borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0.5,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 1,
   },
   wrapProduct: {
     marginTop: 15,

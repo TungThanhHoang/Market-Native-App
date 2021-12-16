@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 
+import { Toast } from "@ant-design/react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -23,12 +24,14 @@ const windowHeight = Dimensions.get("window").height;
 
 function Cart() {
   const navigation = useNavigation();
-  const { decreaseQuanlity, increaseQuanlity, deleteItemCart, cartItem } =
+  const { decreaseQuanlity, increaseQuanlity, deleteItemCart, cartItem , loadItemCart } =
     useContext(CartContext);
   const { formatPrice } = useContext(ProductContext);
 
   const [checkedState, setCheckedState] = useState([...cartItem].fill(false));
   const [totalPrice, setTotalPrice] = useState(0);
+  const [ isFreshing  ,setIsFreshing ] = useState(false)
+
   const handleCheck = (idItem) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === idItem ? !item : item
@@ -36,7 +39,9 @@ function Cart() {
     setCheckedState(updatedCheckedState);
     const total = updatedCheckedState.reduce((sum, currentState, index) => {
       if (currentState === true) {
-        return sum + cartItem[index]?.products.Price * cartItem[index]?.quanlity;
+        return (
+          sum + cartItem[index]?.products.Price * cartItem[index]?.quanlity
+        );
       }
       return sum;
     }, 0);
@@ -59,16 +64,19 @@ function Cart() {
   // confirm checkout
   const handleCheckProduct = () => {
     if (newarray.length === 0) {
-      Alert.alert("Vui lòng chọn ít nhất 1 sản phẩm !");
+      Toast.fail("Vui lòng chọn ít nhất 1 sản phẩm",1)
     } else {
-      navigation.navigate('Checkout' , { totalPrice: totalPrice , cart: newarray })
+      navigation.navigate("Checkout", {
+        totalPrice: totalPrice,
+        cart: newarray,
+      });
     }
   };
 
   //   Xóa sản phẩm
   const handleDeleteItem = (id) => {
     deleteItemCart(id);
-    Alert.alert("Xóa sản phẩm thành công !");
+    Toast.success("Xóa thành công",1);
     setCheckedState([...cartItem].fill(false));
   };
 
@@ -76,7 +84,7 @@ function Cart() {
   const handleIncrease = (id, quanlity) => {
     const increase = increaseQuanlity(id, quanlity);
     if (increase) {
-      Alert.alert("Thêm phẩm thành công !");
+      Toast.info("Thêm số lượng thành công!",1);
     }
     return increase;
   };
@@ -84,10 +92,18 @@ function Cart() {
   const handleDecrease = (id, quanlity) => {
     const decrease = decreaseQuanlity(id, quanlity);
     if (decrease) {
-      Alert.alert("Xóa sản phẩm thành công !");
+      Toast.info("Giảm số lượng thành công!",1);
     }
     return decrease;
   };
+  //  onFreshing..
+  const handleFreshing = () =>{
+    setIsFreshing(true)
+    console.log('get data ')
+    loadItemCart().then(res =>{
+      setIsFreshing(false)
+    })
+ }
 
   return (
     <>
@@ -109,6 +125,8 @@ function Cart() {
         <View style={styles.wrapCart}>
           <FlatList
             showsVerticalScrollIndicator={false}
+            onRefresh={()=>handleFreshing()}
+            refreshing={isFreshing}
             data={cartItem}
             renderItem={({ item, index }) => (
               <CartItem
@@ -123,7 +141,7 @@ function Cart() {
               />
             )}
             keyExtractor={(item, index) => index}
-            contentInset={{ bottom: 20 }}
+            contentInset={{ bottom: 200 }}
           />
         </View>
         <View
@@ -131,7 +149,7 @@ function Cart() {
             position: "absolute",
             flexDirection: "row",
             bottom: 0,
-            backgroundColor: "#FFBF81",
+            backgroundColor: "#fff",
             width: windowWidth,
             alignItems: "center",
           }}
@@ -141,7 +159,7 @@ function Cart() {
               width: (windowWidth * 1.2) / 2,
               alignItems: "flex-end",
               justifyContent: "space-between",
-              paddingRight: 10,
+              paddingRight: 20,
             }}
           >
             <Text style={{ fontSize: 14, fontWeight: "400", paddingBottom: 4 }}>
@@ -153,14 +171,25 @@ function Cart() {
           </View>
           <TouchableOpacity
             style={{
-              width: (windowWidth * 1) / 2.2,
               backgroundColor: "#FFDC5E",
-              height: 55,
+              height: 45,
               justifyContent: "center",
               flexDirection: "row",
               alignItems: "center",
+              borderRadius:10,
+              marginVertical:10,
+              paddingHorizontal:20,
+              shadowOffset: {
+                width: 0,
+                height: 1,
+              },
+              shadowOpacity: 0.3,
+              shadowRadius: 1.0,
+    
+              elevation: 1,
             }}
-            onPress={()=> handleCheckProduct()}
+            activeOpacity={0.8}
+            onPress={() => handleCheckProduct()}
           >
             <Text
               style={{
@@ -172,7 +201,7 @@ function Cart() {
               Mua hàng
             </Text>
             <Text style={{ fontSize: 16, fontWeight: "700", paddingLeft: 2 }}>
-              (10)
+              {newarray.length === 0 ? "" :<Text>({newarray.length})</Text> }
             </Text>
           </TouchableOpacity>
         </View>

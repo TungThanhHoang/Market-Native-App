@@ -10,27 +10,30 @@ import CartContextProvider from "./context/CartContext";
 import CheckOutContextProvider, {
   CheckOutContext,
 } from "./context/CheckOutContext";
+import CategoryContextProvider from "./context/CategoryContext";
 
 const Root = createStackNavigator();
 
 export default function App() {
   return (
     <AuthContextProvider>
-      <ProductContextProvider>
-        <CartContextProvider>
-          <CheckOutContextProvider>
-            <NavigationContainer>
-              <Root.Navigator
-                initialRouteName="Landing"
-                screenOptions={{ gestureEnabled: false, headerShown: false }}
-              >
-                <Root.Screen name="Landing" component={Landing} />
-                <Root.Screen name="Protect" component={ProtectRouter} />
-              </Root.Navigator>
-            </NavigationContainer>
-          </CheckOutContextProvider>
-        </CartContextProvider>
-      </ProductContextProvider>
+      <CategoryContextProvider>
+        <ProductContextProvider>
+          <CartContextProvider>
+            <CheckOutContextProvider>
+              <NavigationContainer>
+                <Root.Navigator
+                  initialRouteName="Landing"
+                  screenOptions={{ gestureEnabled: false, headerShown: false }}
+                >
+                  <Root.Screen name="Landing" component={Landing} />
+                  <Root.Screen name="Protect" component={ProtectRouter} />
+                </Root.Navigator>
+              </NavigationContainer>
+            </CheckOutContextProvider>
+          </CartContextProvider>
+        </ProductContextProvider>
+      </CategoryContextProvider>
     </AuthContextProvider>
   );
 }

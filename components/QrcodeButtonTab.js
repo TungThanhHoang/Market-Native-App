@@ -17,8 +17,9 @@ export default QrcodeButtonTab;
 
 const styles = StyleSheet.create({
   container: {
-    width: 45,
-    height: 45,
+    marginTop:10,
+    width: 42,
+    height: 42,
     backgroundColor: "#000",
     borderRadius: 10,
     alignItems: "center",

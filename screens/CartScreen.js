@@ -5,6 +5,7 @@ import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import OrderSuccess from "../pages/OrderSuccess";
 import Home from "../pages/Home";
+import OrderBill from "../pages/OrderBill";
 const CartStack = createStackNavigator();
 function CartScreen({ navigation, route }) {
   useLayoutEffect(() => {
@@ -29,6 +30,7 @@ function CartScreen({ navigation, route }) {
         <CartStack.Screen name="Home" component={Home} />
         <CartStack.Screen name="Checkout" component={Checkout} />
         <CartStack.Screen name="Order-success" component={OrderSuccess} />
+        <CartStack.Screen name="Order-bill" component={OrderBill} />
       </CartStack.Navigator>
     </>
   );
