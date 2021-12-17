@@ -41,7 +41,7 @@ function OrderSuccess({ route }) {
               width: 200,
               height: 180,
             }}
-            speed={0.4}
+            autoPlay
             loop={false}
           />
           <Text style={{ marginTop: 30, fontWeight: "600" }}>

@@ -30,7 +30,8 @@ function CheckOutProduct({
             marginRight:8,
             marginLeft:8,
             borderBottomWidth:1,
-            borderRadius:10
+            borderRadius:10,
+            
           }}
         >
           <Image
@@ -68,6 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderBottomWidth: 2,
     borderColor: "#D5D6AA",
+    
   },
   title: {
     color: "#353535",

@@ -10,32 +10,23 @@ const windowHeight = Dimensions.get("window").height;
 
 function Landing() {
   const navigation = useNavigation();
-  const animation = useRef(null);
-
-  useEffect(() => {
-    const animationPress = () => {
-      if (animation?.current) {
-        animation.current.play();
-      }
-    };
-    animationPress();
-  });
   return (
     <View style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <View style={{ alignItems: "center", marginTop: 40 }}>
         <LottieView
-          style={{ width: 200, height: 200 }}
-          source={require("../assets/home_animation.json")}
-          ref={animation.current}
-          speed={0.5}
+          style={{ width: 300, height: 300 }}
+          source={require("../assets/shopping-market.json")}
+          // ref={animation.current}
+          // speed={0.6}
           loop={true}
+          autoPlay
         />
       </View>
       <View style={styles.content}></View>
       <View style={styles.start}>
         <TouchableOpacity onPress={() => navigation.navigate("Protect")}>
-          <Text style={styles.titleStart}>Bắt Đầu</Text>
+          <Text style={styles.titleStart}>Shopping ngay</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -68,5 +59,6 @@ const styles = StyleSheet.create({
   titleStart: {
     fontSize: 16,
     fontWeight: "600",
+    color:'#222'
   },
 });

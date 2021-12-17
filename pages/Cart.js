@@ -24,14 +24,18 @@ const windowHeight = Dimensions.get("window").height;
 
 function Cart() {
   const navigation = useNavigation();
-  const { decreaseQuanlity, increaseQuanlity, deleteItemCart, cartItem , loadItemCart } =
-    useContext(CartContext);
+  const {
+    decreaseQuanlity,
+    increaseQuanlity,
+    deleteItemCart,
+    cartItem,
+    loadItemCart,
+  } = useContext(CartContext);
   const { formatPrice } = useContext(ProductContext);
 
   const [checkedState, setCheckedState] = useState([...cartItem].fill(false));
   const [totalPrice, setTotalPrice] = useState(0);
-  const [ isFreshing  ,setIsFreshing ] = useState(false)
-
+  const [isFreshing, setIsFreshing] = useState(false);
   const handleCheck = (idItem) => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === idItem ? !item : item
@@ -64,7 +68,7 @@ function Cart() {
   // confirm checkout
   const handleCheckProduct = () => {
     if (newarray.length === 0) {
-      Toast.fail("Vui lòng chọn ít nhất 1 sản phẩm",1)
+      Toast.fail("Vui lòng chọn ít nhất 1 sản phẩm", 1);
     } else {
       navigation.navigate("Checkout", {
         totalPrice: totalPrice,
@@ -76,7 +80,7 @@ function Cart() {
   //   Xóa sản phẩm
   const handleDeleteItem = (id) => {
     deleteItemCart(id);
-    Toast.success("Xóa thành công",1);
+    Toast.success("Xóa thành công", 1);
     setCheckedState([...cartItem].fill(false));
   };
 
@@ -84,7 +88,7 @@ function Cart() {
   const handleIncrease = (id, quanlity) => {
     const increase = increaseQuanlity(id, quanlity);
     if (increase) {
-      Toast.info("Thêm số lượng thành công!",1);
+      Toast.info("Thêm số lượng thành công!", 1);
     }
     return increase;
   };
@@ -92,18 +96,18 @@ function Cart() {
   const handleDecrease = (id, quanlity) => {
     const decrease = decreaseQuanlity(id, quanlity);
     if (decrease) {
-      Toast.info("Giảm số lượng thành công!",1);
+      Toast.info("Giảm số lượng thành công!", 1);
     }
     return decrease;
   };
   //  onFreshing..
-  const handleFreshing = () =>{
-    setIsFreshing(true)
-    console.log('get data ')
-    loadItemCart().then(res =>{
-      setIsFreshing(false)
-    })
- }
+  const handleFreshing = () => {
+    setIsFreshing(true);
+    console.log("get data ");
+    loadItemCart().then((res) => {
+      setIsFreshing(false);
+    });
+  };
 
   return (
     <>
@@ -114,7 +118,8 @@ function Cart() {
             padding: 15,
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: "#DEE7E7",
+            backgroundColor: "#FEFCAD",
+            marginTop:5
           }}
         >
           <Ionicons name="notifications-outline" size={22} color="#F58A07" />
@@ -125,7 +130,7 @@ function Cart() {
         <View style={styles.wrapCart}>
           <FlatList
             showsVerticalScrollIndicator={false}
-            onRefresh={()=>handleFreshing()}
+            onRefresh={() => handleFreshing()}
             refreshing={isFreshing}
             data={cartItem}
             renderItem={({ item, index }) => (
@@ -176,16 +181,16 @@ function Cart() {
               justifyContent: "center",
               flexDirection: "row",
               alignItems: "center",
-              borderRadius:10,
-              marginVertical:10,
-              paddingHorizontal:20,
+              borderRadius: 10,
+              marginVertical: 10,
+              paddingHorizontal: 20,
               shadowOffset: {
                 width: 0,
                 height: 1,
               },
               shadowOpacity: 0.3,
               shadowRadius: 1.0,
-    
+
               elevation: 1,
             }}
             activeOpacity={0.8}
@@ -201,7 +206,7 @@ function Cart() {
               Mua hàng
             </Text>
             <Text style={{ fontSize: 16, fontWeight: "700", paddingLeft: 2 }}>
-              {newarray.length === 0 ? "" :<Text>({newarray.length})</Text> }
+              {newarray.length === 0 ? "" : <Text>({newarray.length})</Text>}
             </Text>
           </TouchableOpacity>
         </View>

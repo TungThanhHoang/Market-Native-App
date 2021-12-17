@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }) => {
   //     delete axios.defaults.headers.common["Authorization"];
   //   }
   // };
-
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
   const loadUser = async () => {
     const tokenUser = await SecureStore.getItemAsync(TOKEN_USER);
     if (SecureStore[TOKEN_USER]) {
@@ -80,7 +80,7 @@ const AuthContextProvider = ({ children }) => {
       await loadUser();
       return response.data;
     } catch (error) {
-      return error.response.data;
+      console.log(error);
     }
   };
 
@@ -92,15 +92,41 @@ const AuthContextProvider = ({ children }) => {
       payload: { isAuth: false, user: null, ward: null },
     });
   };
+
+  const updateUser = async (updateAddress, userId) => {
+    const tokenUser = await SecureStore.getItemAsync(TOKEN_USER);
+    setLoadingUpdate(true);
+    try {
+      const response = await axios.put(
+        `${API_URL}/users/${userId}`,
+        updateAddress,
+        {
+          headers: {
+            Authorization: `Bearer ${tokenUser}`,
+          },
+        }
+      );
+      if (response.data) {
+        setLoadingUpdate(false);
+        await loadUser();
+      }
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     loadUser();
   }, []);
 
   const contextData = {
     authState,
+    loadingUpdate,
     loginUser,
     logoutUser,
     registerUser,
+    updateUser,
   };
   return (
     <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>

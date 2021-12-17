@@ -26,7 +26,6 @@ function NewProduct() {
     formatPrice,
     loadNewProduct,
   } = useContext(ProductContext);
-
   const ProductItemCard = ({
     item: {
       id,

@@ -91,14 +91,11 @@ function Checkout({ route }) {
   useEffect(() => {
     const arrayProduct = [];
     cart?.forEach((item) => {
-      arrayProduct.push(
-        ...convertProduct,
-        {
-          title: item.products.Price,
-          picture: item.products.picture[0].url,
-          quanlity: item.quanlity,
-        },
-      );
+      arrayProduct.push(...convertProduct, {
+        title: item.products.Price,
+        picture: item.products.picture[0].url,
+        quanlity: item.quanlity,
+      });
     });
     setConvertProduct(arrayProduct);
   }, []);
@@ -107,7 +104,7 @@ function Checkout({ route }) {
     JSON.stringify({
       ...sendCode,
       product: convertProduct,
-      payment:checked
+      payment: checked,
     }),
     opts
   )
@@ -249,6 +246,15 @@ function Checkout({ route }) {
             justifyContent: "flex-end",
             alignItems: "center",
             flexDirection: "row",
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.27,
+            shadowRadius: 4.65,
+
+            elevation: 6,
           }}
         >
           <View style={{ alignItems: "flex-end", marginRight: 10 }}>
@@ -294,11 +300,9 @@ const styles = StyleSheet.create({
     margin: 8,
     padding: 8,
     backgroundColor: "#fff",
-    borderBottomWidth: 2,
     borderColor: "#D5D6AA",
     borderRadius: 8,
     borderWidth: 0.5,
-    borderColor: "#000",
   },
   title: {
     color: "#353535",

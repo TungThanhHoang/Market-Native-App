@@ -11,6 +11,7 @@ import CheckOutContextProvider, {
   CheckOutContext,
 } from "./context/CheckOutContext";
 import CategoryContextProvider from "./context/CategoryContext";
+import SearchContextProvider from "./context/SearchContext";
 
 const Root = createStackNavigator();
 
@@ -21,15 +22,20 @@ export default function App() {
         <ProductContextProvider>
           <CartContextProvider>
             <CheckOutContextProvider>
-              <NavigationContainer>
-                <Root.Navigator
-                  initialRouteName="Landing"
-                  screenOptions={{ gestureEnabled: false, headerShown: false }}
-                >
-                  <Root.Screen name="Landing" component={Landing} />
-                  <Root.Screen name="Protect" component={ProtectRouter} />
-                </Root.Navigator>
-              </NavigationContainer>
+              <SearchContextProvider>
+                <NavigationContainer>
+                  <Root.Navigator
+                    initialRouteName="Landing"
+                    screenOptions={{
+                      gestureEnabled: false,
+                      headerShown: false,
+                    }}
+                  >
+                    <Root.Screen name="Landing" component={Landing} />
+                    <Root.Screen name="Protect" component={ProtectRouter} />
+                  </Root.Navigator>
+                </NavigationContainer>
+              </SearchContextProvider>
             </CheckOutContextProvider>
           </CartContextProvider>
         </ProductContextProvider>

@@ -37,6 +37,15 @@ function Navigation() {
               borderTopColor: "transparent",
               padding: 5,
               height: 55,
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 0.27,
+              shadowRadius: 4.65,
+
+              elevation: 6,
             },
             activeTintColor: "#EEBA0B",
             inactiveTintColor: "#272838",
@@ -69,7 +78,6 @@ function Navigation() {
             options={{
               tabBarLabel: "",
               tabBarIcon: ({ size, color }) => <QrcodeButtonTab size={26} />,
-             
             }}
           />
           <Tab.Screen

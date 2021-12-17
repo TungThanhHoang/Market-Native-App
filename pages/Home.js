@@ -37,7 +37,8 @@ function Home({ navigation }) {
     setIsFreshing(true);
     loadCategory(tokenProduct)
     loadNewProduct(tokenProduct)
-    loadProduct(tokenProduct).then(() => setIsFreshing(false));
+    loadProduct(tokenProduct)
+    .then(() => setIsFreshing(false));
   };
 
   useEffect(() => {
@@ -70,7 +71,7 @@ function Home({ navigation }) {
             <Text style={{ marginRight: 10, opacity: 0.6 }}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
-        <NewProduct />
+      <NewProduct />
       </View>
       {/* Component Product */}
       <View style={styles.wrapNewProduct}>

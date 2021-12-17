@@ -15,12 +15,12 @@ function Navbar({ navigation, title }) {
           shadowColor: "#000",
           shadowOffset: {
             width: 0,
-            height: 1,
+            height: 3,
           },
-          shadowOpacity: 0.18,
-          shadowRadius: 1.0,
+          shadowOpacity: 0.27,
+          shadowRadius: 4.65,
 
-          elevation: 1,
+          elevation: 6,
         }}
       >
         <View
@@ -53,12 +53,7 @@ function Navbar({ navigation, title }) {
               zIndex: 10,
             }}
           >
-            <Ionicons
-              name="cart-outline"
-              size={25}
-              color="#000"
-              
-            />
+            <Ionicons name="cart-outline" size={25} color="#000" />
             <Badge
               status="error"
               value={`${cartItem.length}`}
