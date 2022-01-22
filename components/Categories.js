@@ -41,7 +41,7 @@ function Categories() {
       }
     >
       <View style={styles.cardItem}>
-        <Image source={{ uri: `${API_URL}${url}` }} style={styles.image} />
+        <Image source={{ uri: `${url}` }} style={styles.image} />
         <Text style={styles.title}>{title}</Text>
       </View>
     </TouchableOpacity>

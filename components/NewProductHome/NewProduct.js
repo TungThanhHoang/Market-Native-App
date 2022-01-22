@@ -44,7 +44,7 @@ function NewProduct() {
     >
       <View style={styles.cardItem}>
         <Image
-          source={{ uri: `${API_URL}${url}` }}
+          source={{ uri: `${url}` }}
           style={{ width: "100%", height: 130 }}
         />
         <View style={styles.wrapProduct}>

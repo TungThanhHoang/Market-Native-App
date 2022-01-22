@@ -35,7 +35,7 @@ function CheckOutProduct({
           }}
         >
           <Image
-            source={{ uri: `${API_URL}${url}` }}
+            source={{ uri: `${url}` }}
             style={{ width: 80, height: 80 , resizeMode:"contain" }}
           />
           <View style={{ flex: 1, marginLeft: 10, alignItems: "stretch" }}>

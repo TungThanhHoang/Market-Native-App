@@ -12,7 +12,6 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/core";
-import Select from "../components/Select";
 import country from "../db/ward.json";
 import ModalSelectCountry from "../components/ModalSelectCountry";
 import { AuthContext } from "../context/AuthContext";

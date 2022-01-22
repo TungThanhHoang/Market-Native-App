@@ -29,7 +29,7 @@ function SuggestSearchItem({
           }}
         >
           <Image
-            source={{ uri: `${API_URL}${url}` }}
+            source={{ uri: `${url}` }}
             style={{
               width: 50,
               height: 50,

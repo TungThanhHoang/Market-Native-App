@@ -103,7 +103,7 @@ function CardDetailProduct({
           <Ionicons name="settings-outline" size={25} color="#fff" />
         </View>
         <Image
-          source={{ uri: `${API_URL}${url}` }}
+          source={{ uri: `${url}` }}
           style={{ width: windowWidth, height: 350 }}
         />
         <View style={{ padding: 15 }}>

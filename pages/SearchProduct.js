@@ -16,7 +16,7 @@ function SearchProduct() {
   useEffect(() => {
     searchProduct(searchString);
   }, [searchString]);
-  console.log(searchItem);
+  // console.log(searchItem);
 
   const SuggestProduct = (
     <View style={{ margin: 5, marginTop: 10 }}>

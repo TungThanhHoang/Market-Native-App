@@ -42,7 +42,7 @@ function CategoryItem({
           }}
         >
           <Image
-            source={{ uri: `${API_URL}${url}` }}
+            source={{ uri: `${url}` }}
             style={{
               width: "100%",
               height: 140,

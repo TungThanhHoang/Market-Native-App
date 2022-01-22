@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -33,13 +33,12 @@ function Home({ navigation }) {
   const { loadCategory } = useContext(CategoryContext);
   const tokenProduct = slug(ward);
 
-  const handleFreshing = () => {
+  const handleFreshing = useCallback(() => {
     setIsFreshing(true);
-    loadCategory(tokenProduct)
-    loadNewProduct(tokenProduct)
-    loadProduct(tokenProduct)
-    .then(() => setIsFreshing(false));
-  };
+    loadCategory(tokenProduct);
+    loadNewProduct(tokenProduct);
+    loadProduct(tokenProduct).then(() => setIsFreshing(false));
+  }, []);
 
   useEffect(() => {
     const tokenProduct = slug(ward);
@@ -71,7 +70,7 @@ function Home({ navigation }) {
             <Text style={{ marginRight: 10, opacity: 0.6 }}>Xem tất cả</Text>
           </TouchableOpacity>
         </View>
-      <NewProduct />
+        <NewProduct />
       </View>
       {/* Component Product */}
       <View style={styles.wrapNewProduct}>
@@ -96,7 +95,6 @@ function Home({ navigation }) {
           showsVerticalScrollIndicator={false}
           ListFooterComponent={HomeContent}
           contentInset={{ bottom: 100 }}
-
         />
       </View>
     </>

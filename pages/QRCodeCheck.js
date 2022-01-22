@@ -17,17 +17,20 @@ import { useNavigation } from "@react-navigation/core";
 import { Modalize } from "react-native-modalize";
 import { API_URL } from "../constants/constant";
 import { ProductContext } from "../context/ProductContext";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Alert } from "react-native";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 function QRCodeCheck() {
-  const appState = useRef(AppState.currentState);
+  // const appState = useRef(AppState.currentState);
   const navigation = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [isReactivated, setIsReactivated] = useState(true);
   const [viewFocused, setViewFocused] = useState(false);
-  const [dataCode, setDataCode] = useState([]);
+  const [dataCode, setDataCode] = useState({});
+  const [dataProduct, setDataProduct] = useState({});
   const { formatPrice } = useContext(ProductContext);
   const askForCameraPermission = async () => {
     const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -50,11 +53,13 @@ function QRCodeCheck() {
   useEffect(() => {
     askForCameraPermission();
   }, []);
-
+  console.log(dataCode);
+  // console.log(typeof dataProduct);
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    const getData = data && JSON.parse(data);
+    const getData = data.length && JSON.parse(data);
     setDataCode(getData);
+    // setDataProduct(JSON.parse(getData.product));
     modalizeRef.current?.open();
   };
 
@@ -93,7 +98,7 @@ function QRCodeCheck() {
     setIsReactivated(false);
     navigation.goBack();
   };
-  console.log(dataCode);
+  // console.log("test", dataCode?.product);
   const barScan = () => (
     <View style={styles.container}>
       <BarCodeScanner
@@ -108,7 +113,7 @@ function QRCodeCheck() {
         <Ionicons name="chevron-back-outline" size={30} color="#fff" />
       </TouchableOpacity>
       {scanned && buttonScaned()}
-      <Modalize ref={modalizeRef} snapPoint={600}>
+      <Modalize ref={modalizeRef} snapPoint={600} modalHeight={600}>
         <View style={{ margin: 20 }}>
           <Text style={{ fontSize: 16, color: "#666" }}>
             Thông tin người giao
@@ -143,31 +148,44 @@ function QRCodeCheck() {
             <Text style={{ fontSize: 16, marginBottom: 15, color: "#666" }}>
               Sản phẩm
             </Text>
-            {dataCode.length &&
-              dataCode.product.map((item, index) => {
-                console.log("lỗi");
-                return (
+            {dataCode.product?.map((item) => console.log(item))}
+            {dataCode.product?.map((item, index) => {
+              return (
+                <View
+                  key={index}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    padding: 8,
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                    marginVertical: 10,
+                  }}
+                >
+                  <Image
+                    source={{ uri: `${item?.picture}` }}
+                    style={{ height: 70, width: 70, resizeMode: "contain" }}
+                  ></Image>
                   <View
-                    key={index}
                     style={{
+                      marginLeft: 15,
                       flexDirection: "row",
-                      alignContent: "center",
-                      padding: 8,
-                      borderWidth: 0.5,
-                      borderRadius: 10,
+                      alignItems: "center",
                     }}
                   >
-                    <Image
-                      source={{ uri: `${API_URL}${item?.picture}` }}
-                      style={{ height: 70, width: 70, resizeMode: "contain" }}
-                    ></Image>
-                    <View style={{ marginLeft: 10 }}>
-                      <Text>{item?.title}</Text>
-                      <Text>{item.quanlity}</Text>
+                    <View>
+                      <Text style={{ marginBottom: 8, fontWeight: "500" }}>
+                        {item.title}
+                      </Text>
+                      <Text>x{item.quanlity}</Text>
                     </View>
+                    <Text style={{ color: "#D51243", marginLeft: 20 }}>
+                      {formatPrice.format(item.price)}
+                    </Text>
                   </View>
-                );
-              })}
+                </View>
+              );
+            })}
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Text

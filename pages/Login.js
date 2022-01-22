@@ -6,7 +6,6 @@ import {
   Button,
   Text,
   Dimensions,
-  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { SafeAreaView } from "react-native-safe-area-context";

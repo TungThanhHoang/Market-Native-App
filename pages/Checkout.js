@@ -62,8 +62,8 @@ function Checkout({ route }) {
 
   const [checked, setChecked] = useState(payments[0].title);
   const [imgQR, setImgQR] = useState("hello word");
-  const [convertProduct, setConvertProduct] = useState([]);
-  console.log(convertProduct);
+  const [convertProduct, setConvertProduct] = useState("");
+  // console.log(convertProduct);
   const code = codeOrder(10000000, 100000000);
 
   const [order, setOrder] = useState({
@@ -71,7 +71,7 @@ function Checkout({ route }) {
     phone: `${phone}`,
     name: `${lastname}${firstname} `,
     cart: cart.map((item) => item.id),
-    price: JSON.stringify(totalPrice + 10000),
+    price: JSON.stringify(totalPrice + 15000),
     address: `${address}, ${ward}, ${district}`,
     payment: checked,
   });
@@ -79,7 +79,7 @@ function Checkout({ route }) {
     id_code: JSON.stringify(code),
     phone: `${phone}`,
     name: `${lastname} ${firstname}`,
-    price: JSON.stringify(totalPrice + 10000),
+    price: JSON.stringify(totalPrice + 15000),
     address: `${address}, ${ward}, ${district}`,
   });
   let opts = {
@@ -87,12 +87,13 @@ function Checkout({ route }) {
     width: 256,
     height: 256,
   };
-
+// console.log(cart);
   useEffect(() => {
     const arrayProduct = [];
     cart?.forEach((item) => {
       arrayProduct.push(...convertProduct, {
-        title: item.products.Price,
+        title: item.products.title,
+        price:item.products.Price,
         picture: item.products.picture[0].url,
         quanlity: item.quanlity,
       });

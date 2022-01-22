@@ -46,7 +46,7 @@ function CartItem({
           />
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Image
-              source={{ uri: `${API_URL}${url}` }}
+              source={{ uri: `${url}` }}
               style={{
                 width: 80,
                 height: 80,

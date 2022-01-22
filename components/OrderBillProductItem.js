@@ -19,7 +19,7 @@ function OrderBillProductItem({
     <>
       <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
         <Image
-          source={{ uri: `${API_URL}${url}` }}
+          source={{ uri: `${url}` }}
           style={{ width: 80, height: 80, resizeMode: "contain" }}
         />
         <View
